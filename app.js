@@ -13,6 +13,9 @@ db.once('open', function(){
 });
 mongoose.connect('mongodb://localhost:27017/mongodb_tutorial');
 
+// define model
+var Book = require('./models/book')
+
 // configure app to use bodyParser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
