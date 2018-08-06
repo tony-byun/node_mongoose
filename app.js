@@ -4,6 +4,15 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
+// connect to mongodb server
+var db = mongoose.connection;
+db.on('error', console.error);
+db.once('open', function(){
+    // connected to mongodb server
+    console.log("Connected to mongodb server");
+});
+mongoose.connect('mongodb://localhost:27017/mongodb_tutorial');
+
 // configure app to use bodyParser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
