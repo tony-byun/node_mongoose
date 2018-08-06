@@ -1,4 +1,4 @@
-module.exports = function(app)  {
+module.exports = function(app, Book)  {
     // get all books
     app.get('/api/books', function(req, res) {
         res.end();

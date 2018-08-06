@@ -4,6 +4,9 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
+// define model
+var Book = require('./models/book')
+
 // connect to mongodb server
 var db = mongoose.connection;
 db.on('error', console.error);
@@ -13,9 +16,6 @@ db.once('open', function(){
 });
 mongoose.connect('mongodb://localhost:27017/mongodb_tutorial');
 
-// define model
-var Book = require('./models/book')
-
 // configure app to use bodyParser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -24,7 +24,7 @@ app.use(bodyParser.json());
 var port = process.env.PORT || 8080;
 
 // configure router
-var router = require('./routes')(app);
+var router = require('./routes')(app, Book);
 
 // run server
 var server = app.listen(port, function() {
