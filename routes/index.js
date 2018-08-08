@@ -15,12 +15,12 @@ module.exports = function(app, Book)  {
     });
 
     // create book
-    app.post('/api/books', function(req, res) {
+    app.post('/api/books', function(req, res){
         var book = new Book();
         book.title = req.body.title;
         book.author = req.body.author;
         book.published_date = new Date(req.body.published_date);
-
+    
         book.save(function(err){
             if(err){
                 console.error(err);
@@ -28,6 +28,7 @@ module.exports = function(app, Book)  {
                 return;
             }
             res.json({result: 1});
+    
         });
     });
 
