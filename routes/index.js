@@ -3,7 +3,7 @@ module.exports = function(app, Book)  {
     app.get('/api/books', function(req, res) {
         Book.find(function(err, books){
             if(err){
-                return res.status(500).send({error: 'database failure'});
+                return res.status(500).send({error: "database failure"});
             }
             res.json(books);
         });
@@ -55,7 +55,31 @@ module.exports = function(app, Book)  {
 
     // update book
     app.put('/api/books/:book_id', function(req, res) {
-        res.end();
+        Book.findById(req.params.book_id, function(err, book){
+            if(err){
+                return res.status(500).json({error: "database failure"});
+            }
+            if(!book){
+                return res.status(404).json({error: "not found"});
+            }
+
+            if(req.body.title){
+                book.title = req.body.title;
+            }
+            if(req.body.author){
+                book.author = req.body.author;
+            }
+            if(req.body.published_date){
+                book.published_date = req.body.published_date;
+            }
+
+            book.save(function(err){
+                if(err){
+                    res.status(500).json({error: "failed to update"});
+                }
+                res.json({message: "update completed"});
+            });
+        });
     });
 
     // delete book
