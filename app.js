@@ -4,6 +4,10 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
+// time
+require('date-utils');
+var dt = new Date();
+
 // define model
 var Book = require('./models/book')
 
@@ -12,7 +16,7 @@ var db = mongoose.connection;
 db.on('error', console.error);
 db.once('open', function(){
     // connected to mongodb server
-    console.log("Connected to mongodb server");
+    console.log("Connected to mongodb server" + dt.toFormat("YYYY-MM-DD HH24:MI:SS"));
 });
 mongoose.connect('mongodb://localhost:27017/mongodb_tutorial');
 
