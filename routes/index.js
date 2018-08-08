@@ -1,7 +1,12 @@
 module.exports = function(app, Book)  {
     // get all books
     app.get('/api/books', function(req, res) {
-        res.end();
+        Book.find(function(err, books){
+            if(err){
+                return res.status(500).send({error: 'database failure'});
+            }
+            res.json(books);
+        });
     });
 
     // get single book
