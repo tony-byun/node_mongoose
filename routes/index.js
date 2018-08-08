@@ -24,7 +24,15 @@ module.exports = function(app, Book)  {
 
     // get book by author
     app.get('/api/books/author/:author_id', function(req, res) {
-        res.end();
+        Book.find({author: req.params.author_id}, {_id: 0, title: 1, published_date: 1}, function(err, books){
+            if(err){
+                return res.status(500).send({error: err});
+            }
+            if(books.length === 0){
+                return res.status(404).json({error: "not found"});
+            }
+            res.json(books);
+        });
     });
 
     // create book
