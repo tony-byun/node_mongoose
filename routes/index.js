@@ -16,7 +16,19 @@ module.exports = function(app, Book)  {
 
     // create book
     app.post('/api/books', function(req, res) {
-        res.end();
+        var book = new Book();
+        book.title = req.body.title;
+        book.author = req.body.author;
+        book.published_date = new Date(req.body.published_date);
+
+        book.save(function(err){
+            if(err){
+                console.error(err);
+                res.json({result: 0});
+                return;
+            }
+            res.json({result: 1});
+        });
     });
 
     // update book
