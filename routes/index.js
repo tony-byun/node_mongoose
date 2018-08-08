@@ -11,7 +11,15 @@ module.exports = function(app, Book)  {
 
     // get single book
     app.get('/api/books/:book_id', function(req, res) {
-        res.end();
+        Book.findOne({_id: req.params.book_id}, function(err, book){
+            if(err){
+                return res.status(500).send({error: err});
+            }
+            if(!book){
+                return res.status(404).json({error: "not found"});
+            }
+            res.json(book);
+        });
     });
 
     // get book by author
