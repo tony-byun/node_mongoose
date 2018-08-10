@@ -84,6 +84,15 @@ module.exports = function(app, Book)  {
 
     // delete book
     app.delete('/api/books/:book_id', function(req, res) {
-        res.end();
+        Book.remove({_id: req.params.book_id}, function(err, output){
+            if(err){
+                return res.status(500).json({error: "database failure"});
+            }
+            /* ( SINCE DELETE OPERATION IS IDEMPOTENT, NO NEED TO SPECIFY )
+            if(!output.result.n) return res.status(404).json({ error: "book not found" });
+            res.json({ message: "book deleted" });
+            */
+            res.status(204).end();
+        });
     });
 }
